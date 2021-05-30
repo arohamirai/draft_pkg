@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(draft_pkg)
 
-## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+add_compile_options(-std=c++11 -O3 -g -DNDEBUG -pthread)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -16,7 +16,10 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
-
+find_package(Boost REQUIRED)
+find_package(OpenCV REQUIRED)
+find_package(Eigen3 REQUIRED)
+find_package(Glog  REQUIRED)
 
 catkin_package(
 #  INCLUDE_DIRS include
@@ -27,7 +30,35 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${GLOG_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
+
+add_executable(process_ifm
+src/process_ifm.cpp
+)
+target_link_libraries(process_ifm
+    ${OpenCV_LIBS}
+    ${catkin_LIBRARIES}
+    gflags
+    ${GLOG_LIBRARY}
+)
+
+
+install(DIRECTORY launch  rviz scripts
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+    USE_SOURCE_PERMISSIONS)
+
+install(TARGETS
+    process_ifm
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+install(DIRECTORY
+    include
+    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
 #############
 ## Testing ##

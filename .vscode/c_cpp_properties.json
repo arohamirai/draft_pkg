@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/opt/ros/kinetic/include/**",
+                "/opt/jz/iplus-algo-msgs/include/**",
+                "/opt/jz/jrosmm/include/**",
+                "/opt/jz/cartographer-iplus-mod/include/**",
+                "/opt/jz/libpointmatcher_ros/include/**",
+                "/opt/jz/line-detector/include/**",
+                "/usr/include/**",
+		"~/draft_ws/src/draft_pkg/include/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

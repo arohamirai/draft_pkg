@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "catkin_make",
+			"type": "shell",
+			"command": "cd",
+			"args": [
+				"~/draft_ws",
+				"&&catkin_make",
+				"install",
+				"-j3"
+			],
+			"problemMatcher": [
+				"$catkin-gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
