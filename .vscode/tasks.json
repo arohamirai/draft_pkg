@@ -9,7 +9,7 @@
 				"~/draft_ws",
 				"&&catkin_make",
 				"install",
-				"-j3"
+				"-j2"
 			],
 			"problemMatcher": [
 				"$catkin-gcc"

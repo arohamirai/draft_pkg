@@ -20,6 +20,7 @@ find_package(Boost REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Glog  REQUIRED)
+find_package(PCL REQUIRED)
 
 catkin_package(
 #  INCLUDE_DIRS include
@@ -33,6 +34,7 @@ include_directories(
   ${GLOG_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
 
 add_executable(process_ifm
@@ -45,20 +47,23 @@ target_link_libraries(process_ifm
     ${GLOG_LIBRARY}
 )
 
+add_executable(pcl_icp src/pcl_icp.cpp)
+target_link_libraries(pcl_icp
+${Boost_LIBRARIES}
+${OpenCV_LIBS}
+${PCL_LIBRARIES}
+)
+
 
 install(DIRECTORY  scripts
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
     USE_SOURCE_PERMISSIONS)
 
 install(TARGETS
-    process_ifm
+    process_ifm pcl_icp
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
-install(DIRECTORY
-    include
-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
 #############
 ## Testing ##
