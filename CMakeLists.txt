@@ -46,7 +46,7 @@ target_link_libraries(process_ifm
 )
 
 
-install(DIRECTORY launch  rviz scripts
+install(DIRECTORY  scripts
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
     USE_SOURCE_PERMISSIONS)
 
