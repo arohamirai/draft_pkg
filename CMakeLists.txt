@@ -63,13 +63,20 @@ gflags
 ${GLOG_LIBRARY}
 )
 
+add_executable(pcl_ransac_line src/pcl_ransac_line.cpp)
+target_link_libraries(pcl_ransac_line
+${Boost_LIBRARIES}
+${OpenCV_LIBS}
+${PCL_LIBRARIES}
+)
+
 
 install(DIRECTORY  scripts
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
     USE_SOURCE_PERMISSIONS)
 
 install(TARGETS
-    process_ifm pcl_icp boost_eigen_test
+    process_ifm pcl_icp boost_eigen_test pcl_ransac_line
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
