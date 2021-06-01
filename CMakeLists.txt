@@ -54,13 +54,22 @@ ${OpenCV_LIBS}
 ${PCL_LIBRARIES}
 )
 
+add_executable(boost_eigen_test src/boost_eigen_test.cpp)
+target_link_libraries(boost_eigen_test
+${Boost_LIBRARIES}
+${OpenCV_LIBS}
+${PCL_LIBRARIES}
+gflags
+${GLOG_LIBRARY}
+)
+
 
 install(DIRECTORY  scripts
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
     USE_SOURCE_PERMISSIONS)
 
 install(TARGETS
-    process_ifm pcl_icp
+    process_ifm pcl_icp boost_eigen_test
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
