@@ -70,6 +70,13 @@ ${OpenCV_LIBS}
 ${PCL_LIBRARIES}
 )
 
+add_executable(ros_test src/ros_test.cpp)
+target_link_libraries(ros_test
+gflags
+${GLOG_LIBRARY}
+${catkin_LIBRARIES}
+)
+
 
 install(DIRECTORY  scripts
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
@@ -77,6 +84,7 @@ install(DIRECTORY  scripts
 
 install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
+    ros_test
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

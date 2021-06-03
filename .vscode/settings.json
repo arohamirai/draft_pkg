@@ -68,7 +68,8 @@
         "string": "cpp",
         "any": "cpp",
         "optional": "cpp",
-        "string_view": "cpp"
+        "string_view": "cpp",
+        "geometry": "cpp"
     },
     "python.analysis.extraPaths": [
         "/opt/ros/kinetic/lib/python2.7/dist-packages"
