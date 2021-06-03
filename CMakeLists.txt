@@ -29,7 +29,7 @@ catkin_package(
 #  DEPENDS system_lib
 )
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
   ${GLOG_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
@@ -76,15 +76,21 @@ gflags
 ${GLOG_LIBRARY}
 ${catkin_LIBRARIES}
 )
+add_executable(opencv_cvui src/opencv_cvui.cpp)
+target_link_libraries(opencv_cvui
+gflags
+${GLOG_LIBRARY}
+${OpenCV_LIBS}
+)
 
 
-install(DIRECTORY  scripts
+install(DIRECTORY  scripts include image
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
     USE_SOURCE_PERMISSIONS)
 
 install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
-    ros_test
+    ros_test  opencv_cvui
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
