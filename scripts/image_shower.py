@@ -23,9 +23,8 @@ def image_callback(msg):
         time = msg.header.stamp
         sec = time.secs
         nsec = time.nsecs
-        cv2.imwrite(''+str(sec) +'.' + str(nsec)+'.bmp', cv2_img)
-        print("image saved")
-        #rospy.sleep(5)
+        cv2.imshow("demo", cv2_img)
+        cv2.waitKey(20)
 
 def main():
     n = len(sys.argv)
