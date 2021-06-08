@@ -83,14 +83,22 @@ ${GLOG_LIBRARY}
 ${OpenCV_LIBS}
 )
 
+add_executable(read_image_to_ros src/read_image_to_ros.cpp)
+target_link_libraries(read_image_to_ros
+gflags
+${GLOG_LIBRARY}
+${catkin_LIBRARIES}
+${OpenCV_LIBS}
+)
 
-install(DIRECTORY  scripts include image
+
+install(DIRECTORY  scripts include image launch
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
     USE_SOURCE_PERMISSIONS)
 
 install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
-    ros_test  opencv_cvui
+    ros_test  opencv_cvui read_image_to_ros
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
