@@ -1,0 +1,6 @@
+<launch>
+        <node pkg="draft_pkg" type="read_image_to_ros" name="read_image_to_ros" output="screen">
+                <param name="image_path" value="$(arg image_path)" />
+                <param name="topic_name" value="$(arg topic_name)" />
+        </node>
+</launch>
