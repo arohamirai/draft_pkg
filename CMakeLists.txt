@@ -16,7 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 )
 
-find_package(Boost REQUIRED)
+find_package(Boost COMPONENTS program_options REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(Glog  REQUIRED)
@@ -36,7 +36,7 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}
   ${PCL_INCLUDE_DIRS}
 )
-
+link_directories(${Boost_LIBRARY_DIRS})
 add_executable(process_ifm
 src/process_ifm.cpp
 )
@@ -91,6 +91,15 @@ ${catkin_LIBRARIES}
 ${OpenCV_LIBS}
 )
 
+add_executable(kitti_bin2pcd src/kitti/kitti_bin2pcd.cpp)
+target_link_libraries(kitti_bin2pcd
+gflags
+${GLOG_LIBRARY}
+${Boost_LIBRARIES}
+${PCL_LIBRARIES}
+boost_program_options
+)
+
 
 install(DIRECTORY  scripts include image launch
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
@@ -98,7 +107,7 @@ install(DIRECTORY  scripts include image launch
 
 install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
-    ros_test  opencv_cvui read_image_to_ros
+    ros_test  opencv_cvui read_image_to_ros kitti_bin2pcd
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
