@@ -76,6 +76,14 @@ gflags
 ${GLOG_LIBRARY}
 ${catkin_LIBRARIES}
 )
+
+add_executable(ros_imu_angle src/ros_imu_angle.cpp)
+target_link_libraries(ros_imu_angle
+gflags
+${GLOG_LIBRARY}
+${catkin_LIBRARIES}
+)
+
 add_executable(opencv_cvui src/opencv_cvui.cpp)
 target_link_libraries(opencv_cvui
 gflags
@@ -108,6 +116,7 @@ install(DIRECTORY  scripts include image launch
 install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
     ros_test  opencv_cvui read_image_to_ros kitti_bin2pcd
+    ros_imu_angle
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
