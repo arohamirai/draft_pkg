@@ -23,7 +23,7 @@ find_package(Glog  REQUIRED)
 find_package(PCL REQUIRED)
 
 catkin_package(
-#  INCLUDE_DIRS include
+#  INCLUDE_DIRS include  
 #  LIBRARIES draft_pkg
 #  CATKIN_DEPENDS cv_bridge geometry_msgs pcl_ros roscpp sensor_msgs std_msgs
 #  DEPENDS system_lib
@@ -77,6 +77,13 @@ ${GLOG_LIBRARY}
 ${catkin_LIBRARIES}
 )
 
+add_executable(point_cloud_trans src/point_cloud_trans.cpp)
+target_link_libraries(point_cloud_trans
+gflags
+${GLOG_LIBRARY}
+${catkin_LIBRARIES}
+)
+
 add_executable(ros_imu_angle src/ros_imu_angle.cpp)
 target_link_libraries(ros_imu_angle
 gflags
@@ -116,7 +123,7 @@ install(DIRECTORY  scripts include image launch
 install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
     ros_test  opencv_cvui read_image_to_ros kitti_bin2pcd
-    ros_imu_angle
+    ros_imu_angle point_cloud_trans
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
