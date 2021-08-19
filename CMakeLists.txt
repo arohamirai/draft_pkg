@@ -114,6 +114,14 @@ ${Boost_LIBRARIES}
 ${PCL_LIBRARIES}
 boost_program_options
 )
+add_executable(mvg_codes src/MVG_codes.cpp)
+target_link_libraries(mvg_codes
+${Boost_LIBRARIES}
+${OpenCV_LIBS}
+${PCL_LIBRARIES}
+gflags
+${GLOG_LIBRARY}
+)
 
 
 install(DIRECTORY  scripts include image launch
@@ -123,7 +131,7 @@ install(DIRECTORY  scripts include image launch
 install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
     ros_test  opencv_cvui read_image_to_ros kitti_bin2pcd
-    ros_imu_angle point_cloud_trans
+    ros_imu_angle point_cloud_trans mvg_codes
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
