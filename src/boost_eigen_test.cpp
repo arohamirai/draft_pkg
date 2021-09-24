@@ -2,45 +2,82 @@
  * @Author: liufeng(AT iplusbot.com)
  * @Date: 2021-05-31 15:04:05
  * @LastEditors: liufeng(AT iplusbot.com)
- * @LastEditTime: 2021-05-31 15:19:50
+ * @LastEditTime: 2021-08-24 21:30:28
  * @Description: 
  */
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 #include <glog/logging.h>
 
-Eigen::Vector3d projectPointToPlane(const Eigen::Vector4d &plane, const Eigen::Vector3d &point)
+#include <iostream>
+#include <Eigen/Dense>
+#include <geometry_msgs/Pose.h>
+#include "nlohmann/json.hpp"
+using namespace Eigen;
+using namespace std;
+std::string pose2json(std::string key, geometry_msgs::Pose pose)
 {
-    double A, B, C, D;
-    A = plane[0];
-    B = plane[1];
-    C = plane[2];
-    D = plane[3];
+    nlohmann::json j;
 
-    double x0, y0, z0;
-    x0 = point[0];
-    y0 = point[1];
-    z0 = point[2];
-
-    Eigen::Vector3d norm_plane = Eigen::Vector3d(A, B, C);
-
-    double ABC_2 = norm_plane.transpose() * norm_plane;
-    CHECK(ABC_2 > 1e-8) << "plane normal vector is wrong, A*A + B*B + C*C = " << ABC_2;
-
-    double t = (A * x0 + B * y0 + C * z0 + D) / ABC_2;
-    return Eigen::Vector3d(x0 - A * t, y0 - B * t, z0 - C * t);
+    j[key]["position"]["x"] = pose.position.x;
+    j[key]["position"]["y"] = pose.position.y;
+    j[key]["position"]["z"] = pose.position.z;
+    j[key]["orientation"]["x"] = pose.orientation.x;
+    j[key]["orientation"]["y"] = pose.orientation.y;
+    j[key]["orientation"]["z"] = pose.orientation.z;
+    j[key]["orientation"]["w"] = pose.orientation.w;
+    return j.dump();
 }
-
-int main(int argc, char ** argv)
+geometry_msgs::Pose json2pose(std::string key, std::string pose_string)
 {
-    google::InitGoogleLogging(argv[0]);
-    google::InstallFailureSignalHandler();
-    FLAGS_logtostderr = true;
-    FLAGS_colorlogtostderr = true;
-    FLAGS_logbufsecs = 0;
+    geometry_msgs::Pose pose;
+try{
+    nlohmann::json j = nlohmann::json::parse(pose_string);
+    pose.position.x = j[key]["position"]["x"];
+    pose.position.y = j[key]["position"]["y"];
+    pose.position.z = j[key]["position"]["z"];
 
-    Eigen::Vector4d plane = Eigen::Vector4d(3, -2, 1, -2);
-    Eigen::Vector3d point = Eigen::Vector3d(5, -6, 3);
-    LOG(INFO)
-        << projectPointToPlane(plane, point).transpose();  // desire to print (-1,-2, 1)
+    pose.orientation.x = j[key]["orientation"]["x"];
+    pose.orientation.y = j[key]["orientation"]["y"];
+    pose.orientation.z = j[key]["orientation"]["z"];
+    pose.orientation.w = j[key]["orientation"]["w"];
+    }
+    catch(std::exception&e)
+    {
+        std::cout << "aaaa\n";
+    }
+
+    return pose;
+}
+int main()
+{
+    geometry_msgs::Pose pose;
+    pose.position.x = 111;
+    std::cout << pose2json("fuck", pose);
+    std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaa\n";
+    std::cout << json2pose("fuck", pose2json("fuck1", pose));
+    return 1;
+    Eigen::Vector3d l1(1, 1, 3), l2(1, 1.00, 0);
+    Eigen::Vector3d point_cross = l1.cross(l2);
+    //point_cross /= point_cross[2];
+    std::cout << "point_cross:  " << point_cross;
+
+
+    int n = 10;
+    // generate n points in the plane centered in p and spanned bu the u,v vectors.
+    MatrixXd points_3D(3, n);
+    Vector3d u = Vector3d::Random().normalized();
+    Vector3d v = Vector3d::Random().normalized();
+    Vector3d p = Vector3d::Random();
+    points_3D = p.rowwise().replicate(n) + u * VectorXd::Random(n).transpose() + v * VectorXd::Random(n).transpose();
+    MatrixXd initial_points = points_3D;
+
+    Vector3d centroid = points_3D.rowwise().mean();
+    points_3D.colwise() -= centroid;
+    JacobiSVD<MatrixXd> svd(points_3D, ComputeFullU);
+    Vector3d normal = svd.matrixU().col(2);
+    double d = -normal.dot(centroid);
+
+    cout << "Plane equation: " << normal.transpose() << " " << d << endl;
+    cout << "Distances: " << (normal.transpose() * initial_points).array() + d << endl;
 }

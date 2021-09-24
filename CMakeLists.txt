@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(draft_pkg)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}  ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-add_compile_options(-std=c++11 -O3 -g -DNDEBUG -pthread)
+add_compile_options(-std=c++11 -O3 -g -DDEBUG -pthread)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -123,6 +123,11 @@ gflags
 ${GLOG_LIBRARY}
 )
 
+add_executable(nlohmann_test src/nlohmann_test.cpp)
+target_link_libraries(nlohmann_test
+)
+
+
 
 install(DIRECTORY  scripts include image launch
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
@@ -131,7 +136,7 @@ install(DIRECTORY  scripts include image launch
 install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
     ros_test  opencv_cvui read_image_to_ros kitti_bin2pcd
-    ros_imu_angle point_cloud_trans mvg_codes
+    ros_imu_angle point_cloud_trans mvg_codes nlohmann_test
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

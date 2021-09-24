@@ -8,7 +8,7 @@
         "name": "(gdb) 启动",
         "type": "cppdbg",
         "request": "launch",
-        "program": "/home/lile/ibvs_ws/install/lib/visual_servo_tools/groundtag_test",
+        "program": "/home/lile/draft_ws/install/lib/draft_pkg/process_ifm",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
