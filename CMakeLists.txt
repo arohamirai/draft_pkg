@@ -106,6 +106,15 @@ ${catkin_LIBRARIES}
 ${OpenCV_LIBS}
 )
 
+add_executable(pcd_to_pointcloud src/pcd_to_pointcloud.cpp)
+target_link_libraries(pcd_to_pointcloud
+gflags
+${GLOG_LIBRARY}
+${catkin_LIBRARIES}
+${OpenCV_LIBS}
+)
+
+
 add_executable(kitti_bin2pcd src/kitti/kitti_bin2pcd.cpp)
 target_link_libraries(kitti_bin2pcd
 gflags
@@ -126,9 +135,6 @@ ${GLOG_LIBRARY}
 add_executable(nlohmann_test src/nlohmann_test.cpp)
 target_link_libraries(nlohmann_test
 )
-
-
-
 install(DIRECTORY  scripts include image launch
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
     USE_SOURCE_PERMISSIONS)
@@ -137,6 +143,7 @@ install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
     ros_test  opencv_cvui read_image_to_ros kitti_bin2pcd
     ros_imu_angle point_cloud_trans mvg_codes nlohmann_test
+    pcd_to_pointcloud
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
