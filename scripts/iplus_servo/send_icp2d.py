@@ -1,3 +1,11 @@
+'''
+Author: liufeng(AT iplusbot.com)
+Date: 2021-09-22 15:13:10
+LastEditors: liufeng(AT iplusbot.com)
+LastEditTime: 2021-09-28 20:44:29
+Description: 
+'''
+import rospy
 from math import pi,sin, cos
 import json
 import actionlib
@@ -37,9 +45,9 @@ def send_icp2d_goal():
     ref_base2map.orientation.w = 0.699002221326
 
     templateScan_baseInMap = Pose2D()
-    templateScan_baseInMap.x = 37.6535943106
-    templateScan_baseInMap.y = -24.7078520023
-    templateScan_baseInMap.theta = -1.57395758173
+    templateScan_baseInMap.x = 4.37291685356
+    templateScan_baseInMap.y = -2.09988595421
+    templateScan_baseInMap.theta = 2.45287052759
 
     goal = IbvsConstrainedGoal()
     goal.vs_type = 2
@@ -50,9 +58,9 @@ def send_icp2d_goal():
     goal.templateScan_baseInMap = templateScan_baseInMap
     goal.minCorner = [-1000,-1000]
     goal.maxCorner = [1000,1000]
-    goal.useLessScan = True
+    goal.useLessScan = False
     goal.reconfigure_json_string.data = json.dumps({'speed_level': 2, 'accuracy_level':0, 
-    'icp2d_path':'/home/lile/c8d9b2ce-e89e-46b7-b8cf-c8e4fe004d09','sensor_topic':'/scan_front'})
+    'icp2d_path':'/home/lile/a923b1d2-4364-46f9-ac67-2e08c90f29cc','sensor_topic':'/scan_fola_nav_top'})
     action_client.send_goal(goal)
 
 if __name__ == '__main__':
