@@ -45,7 +45,7 @@ int main(int argc, char **argv)
     VideoCapture cap(image_path);
     if(!cap.isOpened())
         LOG(FATAL) << image_path << " Cant Opened.";
-
+    int n = 0;
     while (ros::ok())
     {
         Mat frame;
@@ -61,12 +61,14 @@ int main(int argc, char **argv)
         else
             gray = frame;
 
+        cv::resize(gray, gray, cv::Size(gray.cols / 8, gray.rows / 8));
         sensor_msgs::ImagePtr p_image_msg;
         p_image_msg = cv_bridge::CvImage(std_msgs::Header(), "mono8", gray).toImageMsg();
         p_image_msg->header.stamp = ros::Time::now();
         pub.publish(p_image_msg);
 
-        LOG_EVERY_N(INFO, 10) << "Image published.";
+        LOG_EVERY_N(INFO, 10) << "Image published. image size: " << gray.size();
+        LOG(INFO) << n++;
         r.sleep();
     }
 

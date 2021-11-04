@@ -7,6 +7,7 @@ from std_msgs.msg import *
 from visual_servo_msgs.msg import IbvsConstrainedAction, IbvsConstrainedGoal
 from visual_servo_msgs.srv import *
 import sys
+import rospy
 
 def icp3d_mapping(mode):
     rospy.init_node('ibvs_constrained_test_node', anonymous=False)
