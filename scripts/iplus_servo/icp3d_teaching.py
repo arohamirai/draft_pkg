@@ -1,6 +1,7 @@
 from math import pi,sin, cos
 import json
 import actionlib
+import rospy
 from geometry_msgs.msg import Pose2D, Pose
 from geometry_msgs.msg import Pose
 from std_msgs.msg import *

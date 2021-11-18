@@ -28,5 +28,5 @@ def icp3d_mapping(mode):
 if __name__ == '__main__':
   if(len(sys.argv)) != 2:
     print("please input mode.(0 for start mpping, 1 for stop mapping)")
-  icp3d_mapping(int(sys.argv[1]))
+  icp3d_mapping(0)
   print("main finished")
