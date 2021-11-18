@@ -105,6 +105,13 @@ ${GLOG_LIBRARY}
 ${catkin_LIBRARIES}
 ${OpenCV_LIBS}
 )
+add_executable(depth_image_to_pointcloud src/depth_image_to_pointcloud.cpp)
+target_link_libraries(depth_image_to_pointcloud
+gflags
+${GLOG_LIBRARY}
+${catkin_LIBRARIES}
+${OpenCV_LIBS}
+)
 add_executable(video_to_ros src/video_to_ros.cpp)
 target_link_libraries(video_to_ros
 gflags
@@ -157,7 +164,7 @@ install(TARGETS
     process_ifm pcl_icp boost_eigen_test pcl_ransac_line
     ros_test  opencv_cvui read_image_to_ros kitti_bin2pcd
     ros_imu_angle point_cloud_trans mvg_codes nlohmann_test
-    pcd_to_pointcloud video_to_ros boost_filesystem
+    pcd_to_pointcloud video_to_ros boost_filesystem depth_image_to_pointcloud
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

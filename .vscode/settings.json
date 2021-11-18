@@ -70,7 +70,9 @@
         "optional": "cpp",
         "string_view": "cpp",
         "geometry": "cpp",
-        "core": "cpp"
+        "core": "cpp",
+        "numericaldiff": "cpp",
+        "sparsecore": "cpp"
     },
     "python.analysis.extraPaths": [
         "/opt/ros/kinetic/lib/python2.7/dist-packages"
