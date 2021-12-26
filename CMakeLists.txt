@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   std_msgs
+  eigen_conversions
 )
 
 find_package(Boost COMPONENTS program_options REQUIRED)
@@ -61,6 +62,7 @@ ${OpenCV_LIBS}
 ${PCL_LIBRARIES}
 gflags
 ${GLOG_LIBRARY}
+${catkin_LIBRARIES}
 )
 
 add_executable(pcl_ransac_line src/pcl_ransac_line.cpp)
